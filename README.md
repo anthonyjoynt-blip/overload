@@ -7,6 +7,9 @@ actually went.
 Single user, local-first, installable as a PWA. No accounts, no server, no
 network calls at runtime.
 
+**Live at https://overload-three-gamma.vercel.app** — open it on a phone and
+use Add to Home Screen to install it. Pushing to `main` deploys automatically.
+
 ## Running it
 
 ```bash
