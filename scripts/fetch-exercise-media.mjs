@@ -62,7 +62,65 @@ async function readLibrary() {
   return entries;
 }
 
+/**
+ * Hand-checked pairings, app id -> dataset name, for movements the dataset
+ * names differently. Each one was read against the dataset's own instructions
+ * and is the same movement; a few differ only in the hand-held implement
+ * (kettlebell for dumbbell) or show it unloaded. These win over the name
+ * match — "Windmill" otherwise lands on a lying stretch of the same name.
+ */
+const OVERRIDES = {
+  'bulgarian-split-squat': 'Split Squat with Dumbbells',
+  'romanian-deadlift': 'Stiff-Legged Dumbbell Deadlift',
+  'alternating-backstep-lunge': 'Dumbbell Rear Lunge',
+  'dumbbell-single-leg-deadlift': 'Kettlebell One-Legged Deadlift',
+  'suspension-trainer-push-up': 'Suspended Push-Up',
+  'dumbbell-overhead-tricep-extension': 'Standing Dumbbell Triceps Extension',
+  'suspension-trainer-body-row': 'Suspended Row',
+  'active-plank': 'Plank',
+  'turkish-get-up': 'Kettlebell Turkish Get-Up (Lunge style)',
+  windmill: 'Kettlebell Windmill',
+  'walking-lunge': 'Bodyweight Walking Lunge',
+  'barbell-romanian-deadlift': 'Romanian Deadlift',
+  'snatch-grip-deadlift': 'Snatch Deadlift',
+  'stability-ball-leg-curl': 'Ball Leg Curl',
+  'leg-press-calf-raise': 'Calf Press On The Leg Press Machine',
+  'incline-barbell-press': 'Barbell Incline Bench Press - Medium Grip',
+  'guillotine-press': 'Barbell Guillotine Bench Press',
+  'close-grip-bench-press': 'Close-Grip Barbell Bench Press',
+  'close-grip-push-up': 'Push-Ups - Close Triceps Position',
+  'incline-fly': 'Incline Dumbbell Flyes',
+  'behind-the-neck-press': 'Standing Barbell Press Behind Neck',
+  'rear-lateral-raise': 'Seated Bent-Over Rear Delt Raise',
+  'rear-cable-fly': 'Cable Rear Delt Fly',
+  'chest-down-fly': 'Reverse Flyes',
+  'dumbbell-upright-row': 'Dumbbell One-Arm Upright Row',
+  'supinated-barbell-row': 'Reverse Grip Bent-Over Rows',
+  't-bar-row': 'T-Bar Row with Handle',
+  'dumbbell-pullover': 'Straight-Arm Dumbbell Pullover',
+  'supinating-dumbbell-curl': 'Dumbbell Alternate Bicep Curl',
+  'reverse-curl': 'Reverse Barbell Curl',
+  'cable-hammer-curl': 'Cable Hammer Curls - Rope Attachment',
+  'skull-crusher': 'EZ-Bar Skullcrusher',
+  'dumbbell-skull-crusher': 'Lying Dumbbell Tricep Extension',
+  'incline-skull-crusher': 'Incline Barbell Triceps Extension',
+  'lying-leg-raise': 'Flat Bench Lying Leg Raise',
+  'ball-crunch': 'Exercise Ball Crunch',
+  crunch: 'Crunches',
+  'cable-chop': 'Standing Cable Wood Chop',
+  'kneeling-stretch': 'Kneeling Hip Flexor',
+  'pancake-stretch': 'The Straddle',
+  'calf-stretch': 'Calf Stretch Hands Against Wall',
+};
+
 function pickMatch(exercise, dataset) {
+  const override = OVERRIDES[exercise.id];
+  if (override) {
+    const found = dataset.find((candidate) => candidate.name === override);
+    if (!found) console.warn(`  override for ${exercise.name} not in the dataset: ${override}`);
+    return found ?? null;
+  }
+
   // Exact only, on the name or an alias, ignoring case, punctuation, plurals
   // and word order. A loose match puts the wrong picture beside a movement,
   // which is worse than no picture — "Bulgarian Split Squat" must never land on

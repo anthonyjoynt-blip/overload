@@ -129,7 +129,7 @@ changes nothing and two devices' histories add together.
 
 ## Exercise visual aids
 
-The library ships with written cues but **no images** — run:
+The images are bundled in `public/exercises/` and cached for offline use. To refresh them, run:
 
 ```bash
 npm run fetch:media
@@ -142,11 +142,14 @@ only** — name or alias, ignoring case, punctuation, plurals and word order. A
 loose match would put the wrong picture beside a movement, which is worse than no
 picture, so anything it cannot match confidently is listed and left alone.
 
-As of the last run: **53 of 122 matched.** The rest are mobility drills and
-static stretches that no exercise database carries, suspension-trainer
-variations, and MAPS-specific movement names. Add an alias in
-`src/data/exercises.ts` and re-run to pull more in, or paste an image URL into
-any movement in the exercise library.
+As of the last run: **92 of 122 matched** — the exact name matches plus a
+hand-checked list (`OVERRIDES` in the script) for movements the dataset names
+differently, each read against the dataset's own instructions and the pictures
+looked at. The rest are mobility drills and stretches no exercise database
+carries, a few suspension-trainer and MAPS-specific movements, and two that
+were tried and dropped because the picture showed something else (Circus
+Press, Sissy Squat). Add an override and re-run to pull more in, or paste an
+image URL into any movement in the exercise library.
 
 `npm run fetch:media --list` shows what it would match without downloading
 anything.

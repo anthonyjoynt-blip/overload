@@ -9,7 +9,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,gif,woff2}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,jpg,webp,gif,woff2}'],
         // Exercise media can be sizeable once a dataset is imported.
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
       },
