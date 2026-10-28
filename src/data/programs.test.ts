@@ -5,6 +5,7 @@ import { MAPS_15_MINUTES_ADVANCED } from './maps15Advanced';
 import { MAPS_AESTHETIC } from './mapsAesthetic';
 import { MAPS_ANABOLIC } from './mapsAnabolic';
 import { MAPS_ANABOLIC_ADVANCED } from './mapsAnabolicAdvanced';
+import { WFH_INTERVAL } from './wfhInterval';
 import { generateSessions, planProgram, resolveWorkout, weekTypeFor } from '../lib/schedule';
 import { buildSetSlots } from '../lib/session';
 import type { Exercise, Program, ProgramExercise, Schedule, Workout } from '../types';
@@ -22,6 +23,7 @@ const PROGRAMS: Program[] = [
   MAPS_ANABOLIC,
   MAPS_ANABOLIC_ADVANCED,
   MAPS_AESTHETIC,
+  WFH_INTERVAL,
 ];
 
 const library = new Map(SEED_EXERCISES.map((e) => [e.id, e as Exercise]));
@@ -295,5 +297,64 @@ describe('MAPS Anabolic Advanced', () => {
     );
     expect(stretches).toHaveLength(4);
     expect(stretches.every((s) => s.reps.seconds === 60)).toBe(true);
+  });
+});
+
+describe('Work-From-Home Intervals', () => {
+  it('runs Monday to Friday, seven slots a day, from 6:30', () => {
+    const [phase] = WFH_INTERVAL.phases;
+    expect(phase.workouts.map((w) => w.name.split(' — ')[0])).toEqual([
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+    ]);
+    for (const workout of phase.workouts) {
+      expect(workout.blocks.map((b) => b.label)).toEqual([
+        '6:30',
+        '7:30',
+        '8:30 · Barbell',
+        '10:30',
+        '11:30',
+        '12:30',
+        '1:30',
+      ]);
+    }
+  });
+
+  it('lands each day on its own weekday when scheduled from a Monday', () => {
+    const schedule: Schedule = {
+      id: 's',
+      programId: WFH_INTERVAL.id,
+      startDate: '2026-11-02',
+      mode: 'weekdays',
+      weekdays: [1, 2, 3, 4, 5],
+      includeOptional: true,
+      active: true,
+      createdAt: 0,
+    };
+    const sessions = generateSessions(WFH_INTERVAL, schedule);
+    expect(sessions).toHaveLength(60);
+    const ids = WFH_INTERVAL.phases[0].workouts.map((w) => w.id);
+    for (const session of sessions) {
+      const weekday = new Date(`${session.date}T12:00:00`).getDay();
+      expect(session.workoutId).toBe(ids[weekday - 1]);
+    }
+  });
+
+  it('judges the barbell lifts on the reps prescribed, not reps plus two', () => {
+    const squat = WFH_INTERVAL.phases[0].workouts[0].blocks[2].exercises[0];
+    expect(squat.exerciseId).toBe('barbell-back-squat');
+    expect(squat.reps).toMatchObject({ type: 'fixed', min: 5 });
+    expect(squat.progression?.mode).toBe('double');
+  });
+
+  it('makes the third Friday front-squat set optional', () => {
+    const block = WFH_INTERVAL.phases[0].workouts[4].blocks[2];
+    expect(block.exercises.map((pe) => [pe.sets, !!pe.optional])).toEqual([
+      [2, false],
+      [1, true],
+    ]);
   });
 });

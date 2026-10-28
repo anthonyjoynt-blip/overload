@@ -123,6 +123,27 @@ function prescriptionKey(p: Prescription): string {
   return JSON.stringify([p.programExercise.reps, p.targetSets]);
 }
 
+/**
+ * Working sets a workout owes for one movement under one scheme. Usually that is
+ * one prescription's count, but a movement can appear twice in a day (a desk set
+ * first thing and again before lunch), and then every non-optional appearance
+ * has to reach the mark for the day to count, not just the best one.
+ */
+function workoutTargetSets(prescription: Prescription, key: string): number {
+  const { workout } = prescription;
+  if (!workout) return prescription.targetSets;
+  const exerciseId = prescription.programExercise.exerciseId;
+  let total = 0;
+  for (const block of workout.blocks) {
+    for (const pe of block.exercises) {
+      if (pe.exerciseId !== exerciseId || pe.optional) continue;
+      const p = { ...prescription, programExercise: pe, targetSets: targetSetCount(block, pe) };
+      if (prescriptionKey(p) === key) total += p.targetSets;
+    }
+  }
+  return Math.max(total, prescription.targetSets);
+}
+
 export interface MovementContext {
   exercise: Exercise;
   prescription: Prescription;
@@ -191,7 +212,13 @@ export function movementProgress(
   const key = prescriptionKey(prescription);
   const sessions = candidates
     .filter((c) => !c.prescription || prescriptionKey(c.prescription) === key)
-    .map((c) => c.sessionSets);
+    .map((c) => {
+      if (!c.prescription) return c.sessionSets;
+      const owed = workoutTargetSets(c.prescription, key);
+      return owed === prescription.targetSets
+        ? c.sessionSets
+        : { ...c.sessionSets, targetSets: owed };
+    });
 
   const state = store.progression.find((p) => p.exerciseId === exerciseId);
 

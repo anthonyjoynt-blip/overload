@@ -740,5 +740,29 @@ export const EXERCISE_MEDIA: Record<string, ExerciseMedia> = {
       "exercises/goblet-squat-1.jpg"
     ],
     "attribution": "free-exercise-db (public domain, the Unlicense)"
+  },
+  "dumbbell-floor-press": {
+    "kind": "sequence",
+    "src": [
+      "exercises/dumbbell-floor-press-0.jpg",
+      "exercises/dumbbell-floor-press-1.jpg"
+    ],
+    "attribution": "free-exercise-db (public domain, the Unlicense)"
+  },
+  "dead-bug": {
+    "kind": "sequence",
+    "src": [
+      "exercises/dead-bug-0.jpg",
+      "exercises/dead-bug-1.jpg"
+    ],
+    "attribution": "free-exercise-db (public domain, the Unlicense)"
+  },
+  "dumbbell-calf-raise": {
+    "kind": "sequence",
+    "src": [
+      "exercises/dumbbell-calf-raise-0.jpg",
+      "exercises/dumbbell-calf-raise-1.jpg"
+    ],
+    "attribution": "free-exercise-db (public domain, the Unlicense)"
   }
 };

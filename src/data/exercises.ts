@@ -1219,4 +1219,45 @@ export const SEED_EXERCISES: Seed[] = [
       'The bell is a counterweight — let it keep you upright.',
     ],
   },
+
+  // --- Added for the work-from-home interval program ------------------------
+  {
+    id: 'dumbbell-floor-press',
+    name: 'Dumbbell Floor Press',
+    muscleGroups: ['chest', 'triceps'],
+    equipment: 'dumbbell',
+    movementClass: 'compound-upper',
+    setup: 'Lying on the floor, knees bent, a dumbbell in each hand over the chest.',
+    cues: [
+      'Lower until the upper arms touch the floor — pause, do not bounce.',
+      'Elbows at about 45° to the body.',
+      'Press the bells back up over the chest.',
+    ],
+  },
+  {
+    id: 'dead-bug',
+    name: 'Dead Bug',
+    muscleGroups: ['core'],
+    equipment: 'bodyweight',
+    movementClass: 'core',
+    unilateral: true,
+    setup: 'On your back, arms straight up, hips and knees bent to 90°.',
+    cues: [
+      'Low back pressed into the floor the whole set.',
+      'Lower the opposite arm and leg slowly, then return and switch.',
+      'Breathe out as the limbs go down.',
+    ],
+    faults: ['The low back arching off the floor as the leg goes long.'],
+    progressionVariants: ['Dead bug', 'Dead bug with a light dumbbell', 'Dead bug, legs straight'],
+  },
+  {
+    id: 'dumbbell-calf-raise',
+    name: 'Dumbbell Calf Raise',
+    aliases: ['Standing Dumbbell Calf Raise'],
+    muscleGroups: ['calves'],
+    equipment: 'dumbbell',
+    movementClass: 'isolation',
+    setup: 'Standing, a dumbbell in each hand — balls of the feet on a step for more range.',
+    cues: ['Full stretch at the bottom, full squeeze at the top.', 'No bouncing.'],
+  },
 ];

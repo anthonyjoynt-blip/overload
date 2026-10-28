@@ -19,6 +19,7 @@ import { MAPS_15_MINUTES_ADVANCED } from '../data/maps15Advanced';
 import { MAPS_AESTHETIC } from '../data/mapsAesthetic';
 import { MAPS_ANABOLIC } from '../data/mapsAnabolic';
 import { MAPS_ANABOLIC_ADVANCED } from '../data/mapsAnabolicAdvanced';
+import { WFH_INTERVAL } from '../data/wfhInterval';
 
 /** Shipped programs, in the order they appear in the library. */
 const SEED_PROGRAMS = [
@@ -27,6 +28,7 @@ const SEED_PROGRAMS = [
   MAPS_ANABOLIC,
   MAPS_ANABOLIC_ADVANCED,
   MAPS_AESTHETIC,
+  WFH_INTERVAL,
 ];
 import { getDB } from './db';
 

@@ -65,7 +65,7 @@ flagged. An AMRAP with a floor ("8+") is judged against the floor plus two.
 
 ## What is in the box
 
-Four programs, transcribed by hand from the PDFs on your Desktop. Structure
+Five MAPS programs, transcribed by hand from the PDFs on your Desktop, plus your own work-from-home write-up. Structure
 only — sets, reps, rest, movement names and the calendar pattern. The coaching
 content stays with the source.
 
@@ -76,6 +76,7 @@ content stays with the source.
 | **MAPS Anabolic** | Pre Phase + 3 × 3 weeks | Trigger Sessions — 10-minute open slots on every non-lifting day |
 | **MAPS Anabolic Advanced** | 3 × (4 weeks + deload) | week types: normal / failure / deload, alternating inside a phase |
 | **MAPS Aesthetic** | 3, 4 and 3 weeks | Focus Sessions — open slots for one lagging body part |
+| **Work-From-Home Intervals** | 12 weeks, Mon–Fri | one slot an hour from 6:30, each labelled with its time; a movement done twice in a day owes both sets |
 
 **122 movements** with form cues, common faults and easier-to-harder variations.
 

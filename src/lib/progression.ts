@@ -133,6 +133,11 @@ export interface SessionSets {
   completedAt: number;
   date: string;
   sets: LoggedSet[];
+  /**
+   * Working sets this session's workout prescribed, when it differs from the
+   * movement's usual count — a movement done twice in one day owes both sets.
+   */
+  targetSets?: number;
 }
 
 export interface SessionVerdict {
@@ -204,7 +209,8 @@ export function judgeSession(
     };
   }
 
-  const required = Math.min(config.requiredSets ?? targetSets, targetSets);
+  const owed = session.targetSets ?? targetSets;
+  const required = Math.min(config.requiredSets ?? owed, owed);
   const setsAtThreshold = workingSets.filter((s) => {
     const done = achieved(s, threshold.unit);
     return s.goodForm && done != null && done >= threshold.value;
