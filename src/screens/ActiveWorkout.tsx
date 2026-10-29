@@ -227,7 +227,13 @@ export function ActiveWorkout() {
           <div className="two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             {slot.programExercise.weightMode !== 'bodyweight' && (
               <Stepper
-                label="Weight"
+                // Dumbbells and kettlebells are logged per bell, never the pair's
+                // total — the rack ladder the jumps step through is per bell too.
+                label={
+                  slot.exercise.equipment === 'dumbbell' || slot.exercise.equipment === 'kettlebell'
+                    ? 'Weight per bell'
+                    : 'Weight'
+                }
                 suffix={store.settings.units}
                 value={draft.weight}
                 step={weightStep(slot.exercise.equipment, store.settings.smallestIncrement)}

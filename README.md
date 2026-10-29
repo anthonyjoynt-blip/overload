@@ -157,9 +157,6 @@ anything.
 
 ## Known gaps
 
-- **Dumbbell weights are logged as you enter them** — the app does not ask
-  whether a number is per hand or total. Be consistent and the coaching is
-  consistent; the rack list in settings assumes per hand.
 - **Rest timers do not fire when the app is closed.** The countdown is correct
   when you come back (it counts from a start time, not by ticking), but a
   background notification would need a service-worker push, which is out of scope
